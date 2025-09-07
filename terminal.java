@@ -54,12 +54,26 @@ public class terminal {
 //        Optional.empty
 //        0
 
-//        List<String> words5 = Arrays.asList("hello", "world");
+        List<String> words5 = Arrays.asList("hello", "world");
         // hello world
 //        String concat = words5.stream().reduce("", (a, b) -> a + " " + b);
 //        System.out.print("|");
 //        System.out.println(concat);
         // h e l l o w o r l d 🔀
+        String cter = words5.stream().reduce("", (a, b) -> a + " " + b.chars()
+                .mapToObj(c -> String.valueOf((char) c))
+                .reduce(" ", (a1, b1) -> a1 + " " + b1));
+
+        String concatenated = words5.stream()
+                .flatMapToInt(String::chars)
+                .mapToObj(c -> String.valueOf((char) c))
+                .collect(Collectors.joining(" "));
+        System.out.println(cter);
+        System.out.println(concatenated);
+        //        String a = "hello";
+//        a.chars().mapToObj(c->(char)c).reduce('',(a1,b1)->a1+" "+b1);
+//        char a = 'a',b='b';
+//        System.out.println(a+b);
 
 //        String a = "123";
 //        String a = new StringBuilder("123").toString();
@@ -95,9 +109,9 @@ public class terminal {
 //        System.out.println(totalLength);
 
         // 8. collect(Supplier<R> supplier, BiConsumer<R, ? super T> accumulator, BiConsumer<R, R> combiner)
-        List<String> words7 = Arrays.asList("hello", "world","");
-        ArrayList<String> ans = words7.stream().collect(ArrayList::new, ArrayList::add,ArrayList::addAll);
-        System.out.println(ans);
+//        List<String> words7 = Arrays.asList("hello", "world","");
+//        ArrayList<String> ans = words7.stream().collect(ArrayList::new, ArrayList::add,ArrayList::addAll);
+//        System.out.println(ans);
         // Result: ArrayList containing [hello, world]
 
         // joining
@@ -119,9 +133,9 @@ public class terminal {
         // 10. min(Comparator<? super T> comparator)
         List<String> words9 = Arrays.asList("hello", "world", "");
 //        Optional<String> shortest = words9.stream().min(Comparator.comparing(String::length));
-        List<Integer> ls = new ArrayList<>(List.of(2,-3,54,56,6,77,6));
-        Optional<Integer> shortest = ls.stream().min((a,b)->a-b);
-        System.out.println(shortest);
+//        List<Integer> ls = new ArrayList<>(List.of(2,-3,54,56,6,77,6));
+//        Optional<Integer> shortest = ls.stream().min((a,b)->a-b);
+//        System.out.println(shortest);
 //        System.out.println(Collections.min(ls));
 
         // 11. max(Comparator<? super T> comparator)
@@ -135,7 +149,7 @@ public class terminal {
 
         // 12. count() // how many whose len >4
         List<String> words = Arrays.asList("hello", "world", "");
-        long a = words.stream().filter(i -> i.length() > 4).count();
+//        long a = words.stream().filter(i -> i.length() > 4).count();
 
         // 13. anyMatch(Predicate<? super T> predicate)
         List<String> words13 = Arrays.asList("hello", "world", "");

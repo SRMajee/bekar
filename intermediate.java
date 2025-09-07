@@ -53,11 +53,11 @@ public class intermediate {
 //        System.out.println(ans3);
 
         // 7. flatMapToInt(Function<? super T, ? extends IntStream> mapper)
-        List<String> words3 = Arrays.asList("a", "b");
+        List<String> words3 = Arrays.asList("abc", "bcd");
         IntStream length2 = words3.stream().flatMapToInt(i -> i.chars());
-        List<String> ans4 = length2.mapToObj(c -> String.valueOf((char) c)).collect(toList());
+//        List<String> ans4 = length2.mapToObj(c -> String.valueOf((char) c)).collect(toList());
 //        System.out.println(ans4);
-//        System.out.println(length2.boxed().collect(toList()));
+        System.out.println(length2.boxed().collect(toList()));
 
         // 8. flatMapToLong(Function<? super T, ? extends LongStream> mapper)
         List<String> numbers2 = Arrays.asList("1,2,3", "4,5,6"); // "1 2 3" , "4 5 6"
