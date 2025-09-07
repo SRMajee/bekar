@@ -115,8 +115,12 @@ public class intermediate {
         List<Integer> skipped = numbers5.stream().skip(3).collect(Collectors.toList());
 
         // Example
-        List<Integer> numbers6 = Arrays.asList(1, 2, 3);
-        List<Integer> numbers7 = Arrays.asList(1, 2, 3, 4);
+        List<Integer> numbers6 = Arrays.asList(1, 2, 3); // i
+        List<Integer> numbers7 = Arrays.asList(1, 2, 3, 4);  // k => {i,k}
+        List<int[]> ans = numbers6.stream().flatMap(i -> numbers7.stream().map(k -> new int[]{i, k})).collect(toList());
+//        for(int []i:ans){
+//            System.out.println(Arrays.toString(i));
+//        }
         /*
         [1, 1]
         [1, 2]
@@ -132,8 +136,12 @@ public class intermediate {
         [3, 4]
         */
 
-
-
+//        List<Integer> l = new ArrayList<>(List.of(1,2,3));
+//        int arr[] = l.stream().mapToInt(Integer::intValue).toArray();
+//        System.out.println(Arrays.toString(arr));
+//        Integer ar = 10;
+//        System.out.println(ar);
+//        System.out.println(ar.intValue());
 
     }
 }
