@@ -2,7 +2,7 @@
 % 1. Generate first N natural numbers
 % ------------------------------------------------------------
 % append
-append([],L,L)
+append([],L,L).
 append(L1,L2,L):- [H|T]=L1,append(T,L2,L3),L=[H|L3].
 
 % genNaturals(N, List)
