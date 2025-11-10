@@ -25,12 +25,12 @@ is_sorted([H,A|B]):-H=<A, is_sorted([A|B]).
 
 % append
 append([],L,L).
-append(L1,L2,L):- [H|T]=L1,append(T,L2,L3),L=[H|L3].
+append([H|T],L2,[H|L3]):- append(T,L2,L3).
 
 % accumulator
 listsize(L,N):-listacc(L,0,N).
 listacc([],A,A).
-listacc([H|T],A,N):- A1=A+1,listacc(T,A1,N).
+listacc([_|T],A,N):- A1=A+1,listacc(T,A1,N).
 
 % last element of list
 lastElement([X],X).
@@ -54,9 +54,16 @@ prependList([], L, L).
 % Recursive case
 prependList([H|T], L, [H|R]) :- prependList(T, L, R).
 
-% gcd
-gcd(X,0,X).
-gcd(X,Y,Z):- not(Y=0), R is X mod Y, gcd(Y,R,Z).
+% --- GCD using Euclidean algorithm ---
+gcd(X, 0, X) :- !.
+gcd(X, Y, G) :-
+    R is X mod Y,
+    gcd(Y, R, G).
+
+% --- LCM using GCD ---
+lcm(A, B, L) :-
+    gcd(A, B, G),
+    L is (A * B) // G.   % integer division
 
 % fibonacci
 fibonacci(0, 0).
@@ -129,31 +136,16 @@ linearSearch([_|T], X) :- linearSearch(T, X).
 
 % --- Quick Sort ---
 quickSort([], []).
-quickSort([H|T], Sorted) :-
-    partition(H, T, Smaller, Greater),
-    quickSort(Smaller, S1),
-    quickSort(Greater, S2),
-    append(S1, [H|S2], Sorted).
+quickSort([H|T], S) :-
+    partition(H, T, L, R),
+    quickSort(L, S1),
+    quickSort(R, S2),
+    append(S1, [H|S2], S).
 
 partition(_, [], [], []).
-partition(P, [H|T], [H|S], G) :- H =< P, !, partition(P, T, S, G).
-partition(P, [H|T], S, [H|G]) :- partition(P, T, S, G)
+partition(P, [H|T], [H|L], R) :- H =< P, !, partition(P, T, L, R).
+partition(P, [H|T], L, [H|R]) :- partition(P, T, L, R).
 
-
-% quickSort(List, Sorted)
-quickSort([], []).
-quickSort([H|T], Sorted) :-
-    partition(H, T, Smaller, Greater),
-    quickSort(Smaller, SortedSmaller),
-    quickSort(Greater, SortedGreater),
-    append(SortedSmaller, [H|SortedGreater], Sorted).
-
-% partition(Pivot, List, Smaller, Greater)
-partition(_, [], [], []).
-partition(P, [H|T], [H|Smaller], Greater) :-
-    H =< P, !, partition(P, T, Smaller, Greater).
-partition(P, [H|T], Smaller, [H|Greater]) :-
-    partition(P, T, Smaller, Greater).
 
 
 % Basic Recursive Definition
