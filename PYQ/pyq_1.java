@@ -123,7 +123,6 @@ public class pyq_1 {
                                                 Collectors.mapping(Artist::getName, Collectors.toList())));
                 cityToNames.forEach((city, names) -> System.out.println(city + ": " + names));
 
-
                 HashMap<String, List<String>> cityToNames2 = artists.parallelStream()
                                 .collect(Collectors.groupingBy(
                                                 Artist::getOrigin,
