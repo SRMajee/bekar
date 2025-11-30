@@ -1,10 +1,12 @@
 package PYQ;
 
 import java.*;
+import java.text.Collator;
 
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 // import static java.util.stream.Collectors.toSet;
 
 public class pyq_1 {
@@ -27,6 +29,28 @@ public class pyq_1 {
                 List<Artist> bands = artists.stream()
                                 .filter(a -> a.getMembers().size() == maxSize)
                                 .toList();
+
+                // Together
+                List<Artist> bandsWithMaxMembers = artists.stream()
+                                .collect(Collectors.collectingAndThen(
+                                                Collectors.maxBy(Comparator.comparingInt(a -> a.getMembers().size())),
+                                                // Step artist
+                                                opt -> artists.stream() // Step 2: filter based on max found
+                                                                .filter(a -> a.getMembers().size() == opt.get()
+                                                                                .getMembers().size())
+                                                                .toList()));
+
+                List<Artist> bandsWithMaxMembers1 = artists.stream()
+                                .collect(Collectors.groupingBy(a -> a.getMembers().size()))
+                                // Map<Integer, List<Artist>>
+                                .entrySet() // Set<Entry<Integer, List<Artist>>>
+                                .stream() // Stream<Entry<Integer, List<Artist>>>
+                                .max(Map.Entry.comparingByKey()) // Optional<Entry<Integer, List<Artist>>>
+                                .map(Map.Entry::getValue) // Optional<List<Artist>>
+                                .orElse(List.of()); // List<Artist>
+
+                // .max(Comparator.comparing(a -> a.getKey())) // ✔ equivalent
+                // .max(Comparator.comparing(Map.Entry::getKey)) // ✔ equivalent, cleaner
 
                 // Set<Artist> bands = artists.stream()
                 // .filter(a -> a.getMembers().size() == maxSize)
@@ -120,7 +144,8 @@ public class pyq_1 {
                 Map<String, List<String>> cityToNames = artists.parallelStream()
                                 .collect(Collectors.groupingBy(
                                                 Artist::getOrigin,
-                                                Collectors.mapping(Artist::getName, Collectors.toList())));
+                                                Collectors.mapping(
+                                                                Artist::getName, Collectors.toList())));
                 cityToNames.forEach((city, names) -> System.out.println(city + ": " + names));
 
                 HashMap<String, List<String>> cityToNames2 = artists.parallelStream()
@@ -166,15 +191,19 @@ public class pyq_1 {
                  * Output: [a1+b1, a2+b2, ...]
                  */
 
+                List<Integer> list1 = new ArrayList<>();
+                List<Integer> list2 = new ArrayList<>();
+
                 List<Integer> result2 = IntStream.range(0, Math.min(list1.size(), list2.size()))
                                 .mapToObj(i -> list1.get(i) + list2.get(i))
-                                .toList();
+                                .collect(Collectors.collectingAndThen(Collectors.toSet(), i -> new ArrayList<>(i)));
                 /*
                  * (d) Partition the list of natural numbers into prime and non-prime numbers
                  * using Java Streams.
                  */
-                Map<Boolean, List<Integer>> result1 = list.stream()
-                                .collect(Collectors.partitioningBy(n -> isPrime(n)));
+                int n = 5;
+                Map<Boolean, List<Integer>> result1 = Stream.iterate(1, x->x+1).limit(n)
+                                .collect(Collectors.partitioningBy(i -> isPrime(i)));
 
         }
 

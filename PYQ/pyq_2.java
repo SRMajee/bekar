@@ -28,6 +28,27 @@ public class pyq_2 {
 
                 System.out.println("Number of different words = " + distinctCount);
 
+                Arrays.stream(words)
+                                .distinct()
+                                .collect(Collectors.collectingAndThen(Collectors.counting(),
+                                                c -> {
+                                                        System.out.println("Number of different words = " + c);
+                                                        return c;
+                                                }));
+
+                long count = Arrays.stream(words)
+                                .distinct()
+                                .peek(w -> System.out.println("Unique word: " + w)) // prints words, not count
+                                .count();
+                System.out.println("Count = " + count);
+                Arrays.stream(words)
+                                .distinct() // remove duplicates
+                                .forEach(System.out::println);
+
+                Arrays.stream(words)
+                                .distinct()
+                                .forEach(w -> System.out.print(w + " "));
+
                 /*
                  * (ii) Print the sum of the lengths of all words having length > 4
                  */
@@ -84,7 +105,7 @@ public class pyq_2 {
                 List<Integer> fib = Stream.iterate(new int[] { 0, 1 }, p -> new int[] { p[1], p[0] + p[1] })
                                 .limit(n)
                                 .map(p -> p[0])
-                                .toList();
+                                .collect(Collectors.toList());
 
                 System.out.println(fib);
 
@@ -127,13 +148,17 @@ public class pyq_2 {
                  * 0, 0, 1, 1, 2, 4, 7, 13, 24, 44, 81, ...
                  * 
                  * Generate n Tribonacci numbers
-                 * int n = 20;
-                 */
+                 */ int n = 20;
+
                 List<Long> trib = Stream.iterate(new long[] { 0, 0, 1 },
                                 t -> new long[] { t[1], t[2], t[0] + t[1] + t[2] })
                                 .limit(n)
                                 .map(t -> t[0])
                                 .toList();
+                long ans = Stream.iterate(new long[] { 0, 0, 1 },
+                                t -> new long[] { t[1], t[2], t[0] + t[1] + t[2] })
+                                .limit(n)
+                                .mapToLong(i -> i[0]).sum();
 
                 /*
                  * Print sum of first 20 Tribonacci numbers
@@ -177,6 +202,9 @@ public class pyq_2 {
                 long count = s.chars()
                                 .filter(Character::isLowerCase)
                                 .count();
+                long count1 = s.chars() // IntStream
+                                .filter(c -> Character.isLowerCase(c)) // IntStream (filtered)
+                                .count(); // long
 
                 System.out.println("Lowercase count = " + count);
 
@@ -197,17 +225,18 @@ public class pyq_2 {
                  * 
                  */
                 // List<SimpleEntry<String, String>> duplicates = IntStream
-                //                 .range(0, Math.min(courses.size(), rooms.size()))
-                //                 .mapToObj(i -> new AbstractMap.SimpleEntry<>(courses.get(i), rooms.get(i)))
-                //                 .collect(Collectors.groupingBy(e -> e, Collectors.counting()))
-                //                 .entrySet().stream()
-                //                 .filter(e -> e.getValue() > 1)
-                //                 .map(Map.Entry::getKey)
-                //                 .toList();
+                // .range(0, Math.min(courses.size(), rooms.size()))
+                // .mapToObj(i -> new AbstractMap.SimpleEntry<>(courses.get(i), rooms.get(i)))
+                // .collect(Collectors.groupingBy(e -> e, Collectors.counting()))
+                // .entrySet().stream()
+                // .filter(e -> e.getValue() > 1)
+                // .map(Map.Entry::getKey)
+                // .toList();
                 // Solution (uses only Strings for pairs)
                 List<String> duplicates1 = IntStream.range(
-                        0, Math.min(courses.size(), rooms.size()))
-                                .mapToObj(i -> courses.get(i) + "#" + rooms.get(i)) // Stream<String> represent pair as a string
+                                0, Math.min(courses.size(), rooms.size()))
+                                .mapToObj(i -> courses.get(i) + "#" + rooms.get(i)) // Stream<String> represent pair as
+                                                                                    // a string
                                 .collect(Collectors.groupingBy(x -> x, Collectors.counting())) // Map<String, Long>
                                 .entrySet() // Set<Map.Entry<String, Long>>
                                 .stream() // Stream<Map.Entry<String, Long>>
