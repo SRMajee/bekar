@@ -138,7 +138,12 @@ public class pyq_3 {
                         Dish::getType,
                         Collectors.collectingAndThen(
                                 Collectors.minBy(Comparator.comparingInt(Dish::getCalories)),
-                                Optional::get)));
+                                opt -> opt.orElse(null))));
+
+        Map<Dish.Type, Optional<Dish>> lowestCal = menu.stream()
+                .collect(Collectors.groupingBy(
+                        Dish::getType,
+                        Collectors.minBy(Comparator.comparingInt(Dish::getCalories))));
 
         System.out.println(lowestCal);
 
@@ -168,6 +173,11 @@ public class pyq_3 {
                 .flatMap(word -> word.chars().mapToObj(c -> (char) c))
                 .distinct()
                 .toList();
+        List<Character> uniqueChars1 = words.stream()
+                .flatMapToInt(word -> word.chars()) // IntStream
+                .mapToObj(c -> (char) c) // IntStream → Stream<Character>
+                .distinct()
+                .toList();
 
         System.out.println(uniqueChars);
 
@@ -175,5 +185,63 @@ public class pyq_3 {
          * This extracts characters, flattens them, removes duplicates, then returns a
          * list.
          */
+
+        // Sort unique words by decreasing length, return list.
+
+        List<String> longestUniqueWords = words.stream()
+                .distinct()
+                .sorted((a, b) -> Integer.compare(b.length(), a.length()))
+                .toList();
+
+        List<String> longestUniqueWords = words.stream()
+                .distinct()
+                .sorted(Comparator.comparing(String::length).reversed())
+                .toList();
+
+        System.out.println("Longest Unique Words = " + longestUniqueWords);
+        // 2️⃣ Alphabetical Ordering (Case-insensitive)
+        List<String> alphabeticalUnique = words.stream()
+                .map(String::toLowerCase)
+                .sorted()
+                .toList();
+
+        List<String> alphabeticalUnique2 = words.stream()
+                .map(w -> w.toLowerCase()) // normalize case
+                .distinct()
+                .sorted((a, b) -> b.compareTo(a)) // reverse lexicographical
+                .toList();
+        List<String> alphabeticalUnique = words.stream()
+                .map(w -> w.toLowerCase())
+                .distinct()
+                .sorted(Comparator.reverseOrder())
+                .toList();
+        System.out.println(alphabeticalUnique);
+        System.out.println("Alphabetical Unique Words = " + alphabeticalUnique);
+        // 3️⃣ Top N Frequent Words
+
+        // Set any value of N.
+
+        // int N = 3;
+
+        List<String> topN = words.stream()
+                .collect(Collectors.groupingBy(w -> w, Collectors.counting()))
+                .entrySet()
+                .stream()
+                .sorted((a, b) -> Long.compare(b.getValue(), a.getValue())) // frequency descending
+                .limit(N)
+                .map(i -> i.getKey())
+                .toList();
+
+        System.out.println("Top " + N + " Frequent Words = " + topN);
+
+        // 4️⃣ Clean input → Remove punctuation + normalize + get unique words
+        List<String> cleanedUniqueWords = words.stream()
+                .map(w -> w.replaceAll("[^a-zA-Z]", "")) // remove punctuation
+                .map(String::toLowerCase) // case normalize
+                .filter(w -> !w.isBlank()) // remove empty results
+                .distinct()
+                .toList();
+
+        System.out.println("Clean & Unique Words = " + cleanedUniqueWords);
     }
 }

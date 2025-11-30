@@ -242,7 +242,7 @@ public class pyq_2 {
                                 .stream() // Stream<Map.Entry<String, Long>>
                                 .filter(e -> e.getValue() > 1) // Stream<Map.Entry<String, Long>>
                                 .map(Map.Entry::getKey) // Stream<String>
-                                .toList(); // List<String>
+                                .toList();
 
                 // To print in readable form
                 duplicates1.forEach(p -> {
@@ -261,6 +261,7 @@ public class pyq_2 {
                 Map<String, Long> freq = stream.collect(Collectors.groupingBy(
                                 w -> w,
                                 Collectors.counting()));
+                freq.forEach();
                 /*
                  * Example Output:
                  * {Das=3, Sarkar=2}
