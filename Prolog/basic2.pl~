@@ -123,16 +123,12 @@ palindromeAny(Input) :-
 
 
 % --- Bubble Sort ---
-bubble([X,Y|T], [Y|R], 1) :-
-    X > Y, !,
-    bubble([X|T], R, 1).
-bubble([X|T], [X|R], F) :-
-    bubble(T, R, F).
-bubble([], [], 0).
-
-bubbleSort(L, S) :-
-    bubble(L, L1, F),
-    ( F =:= 0 -> S = L1 ; bubbleSort(L1, S) ).
+bubble([X,Y|T], [Y|R]) :- X > Y, !, bubble([X|T], R).
+bubble([X|T], [X|R]) :- bubble(T, R).
+bubble([], []).
+bubbleSort(L, Sorted) :-
+    bubble(L, L1),
+    (L = L1 -> Sorted = L ; bubbleSort(L1, Sorted)).
 
 % --- Linear Search ---
 linearSearch([X|_], X) :- !.
