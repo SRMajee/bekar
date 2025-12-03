@@ -17,6 +17,13 @@ from itertools import chain
 words = ["ab", "cd", "ef"]
 print(list(chain.from_iterable(map(list, words))))
 # print(list("ab"))
+# from itertools import chain
+
+# words = ["ab", "cd", "ef"]
+
+# maintains order
+print(list(dict.fromkeys(chain.from_iterable(map(list, words)))))
+
 
 
 # # 23. First 20 Fibonacci using generator.

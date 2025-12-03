@@ -32,7 +32,7 @@ writeNum(I, J) :-
     num(X),
     X >= I, X =< J,
     write(X), nl,
-    X=J,!.
+    !.
 writeNum(_, _).  % succeed after finishing
 
 

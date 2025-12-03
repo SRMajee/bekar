@@ -140,57 +140,57 @@ public class terminal {
                 // // System.out.println(shortest);
                 // // System.out.println(Collections.min(ls));
 
-                // // 11. max(Comparator<? super T> comparator)
-                // List<String> words10 = Arrays.asList("hello", "world", "");
-                // Optional<String> longest =
-                // words10.stream().max(Comparator.comparing(String::length));
-                // // Result: Optional["hello"] or Optional["world"]
+                // 11. max(Comparator<? super T> comparator)
+                List<String> words10 = Arrays.asList("hello", "world", "");
+                Optional<String> longest =
+                words10.stream().max(Comparator.comparing(String::length));
+                // Result: Optional["hello"] or Optional["world"]
 
-                // List<Integer> numbers6 = Arrays.asList(3, 1, 4, 1, 5);
-                // Optional<Integer> maximum = numbers6.stream().max(Integer::compareTo);
-                // // Result: Optional[5]
+                List<Integer> numbers6 = Arrays.asList(3, 1, 4, 1, 5);
+                Optional<Integer> maximum = numbers6.stream().max(Integer::compareTo);
+                // Result: Optional[5]
 
-                // // 12. count() // how many whose len >4
-                // List<String> words = Arrays.asList("hello", "world", "");
-                // // long a = words.stream().filter(i -> i.length() > 4).count();
+                // 12. count() // how many whose len >4
+                List<String> words = Arrays.asList("hello", "world", "");
+                // long a = words.stream().filter(i -> i.length() > 4).count();
 
-                // // 13. anyMatch(Predicate<? super T> predicate)
-                // List<String> words13 = Arrays.asList("hello", "world", "");
-                // boolean hasLongWord = words13.stream().anyMatch(word -> word.length() > 4);
-                // // Result: true
+                // 13. anyMatch(Predicate<? super T> predicate)
+                List<String> words13 = Arrays.asList("hello", "world", "");
+                boolean hasLongWord = words13.stream().anyMatch(word -> word.length() > 4);
+                // Result: true
 
-                // boolean hasShortWord = words.stream().anyMatch(word -> word.length() < 3);
-                // // Result: false
+                boolean hasShortWord = words.stream().anyMatch(word -> word.length() < 3);
+                // Result: false
 
-                // // 14. allMatch(Predicate<? super T> predicate)
-                // List<String> words14 = Arrays.asList("hello", "world", "");
-                // boolean allLongWords = words14.stream().allMatch(word -> word.length() > 3);
-                // // Result: true
+                // 14. allMatch(Predicate<? super T> predicate)
+                List<String> words14 = Arrays.asList("hello", "world", "");
+                boolean allLongWords = words14.stream().allMatch(word -> word.length() > 3);
+                // Result: true
 
-                // boolean allVeryLongWords = words.stream().allMatch(word -> word.length() >
-                // 5);
-                // // Result: false
+                boolean allVeryLongWords = words.stream().allMatch(word -> word.length() >
+                5);
+                // Result: false
 
-                // // 15. noneMatch(Predicate<? super T> predicate)
-                // List<String> words15 = Arrays.asList("hello", "world", "");
-                // boolean noShortWords = words15.stream().noneMatch(word -> word.length() < 3);
-                // // Result: true
+                // 15. noneMatch(Predicate<? super T> predicate)
+                List<String> words15 = Arrays.asList("hello", "world", "");
+                boolean noShortWords = words15.stream().noneMatch(word -> word.length() < 3);
+                // Result: true
 
-                // // 16. findFirst()
-                // List<String> words16 = Arrays.asList("hello", "world", "");
-                // Optional<String> first = words16.stream().filter(word -> word.length() >
-                // 4).findFirst();
-                // // Result: Optional["hello"]
+                // 16. findFirst()
+                List<String> words16 = Arrays.asList("hello", "world", "");
+                Optional<String> first = words16.stream().filter(word -> word.length() >
+                4).findFirst();
+                // Result: Optional["hello"]
 
-                // Optional<String> notFound = words.stream().filter(word ->
-                // word.startsWith("x")).findFirst();
-                // // Result: Optional.empty()
+                Optional<String> notFound = words.stream().filter(word ->
+                word.startsWith("x")).findFirst();
+                // Result: Optional.empty()
 
-                // // 17. findAny()
-                // List<String> words17 = Arrays.asList("hello", "world", "");
-                // Optional<String> any = words17.parallelStream().filter(word -> word.length()
-                // > 4).findAny();
-                // // Result: Optional["hello"] or Optional["world"] (non-deterministic)
+                // 17. findAny()
+                List<String> words17 = Arrays.asList("hello", "world", "");
+                Optional<String> any = words17.parallelStream().filter(word -> word.length()
+                > 4).findAny();
+                // Result: Optional["hello"] or Optional["world"] (non-deterministic)
 
                 String s = "mississippi";
                 s

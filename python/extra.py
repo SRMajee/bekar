@@ -27,6 +27,8 @@ all([1,1,0])  # stops at 0
 
 # f = sq()
 # [print(next(f)) for _ in range(5)]
+
+
 # # 35. Implement reduce-max without using builtin max().
 # from functools import reduce
 
